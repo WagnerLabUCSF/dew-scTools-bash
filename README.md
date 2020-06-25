@@ -10,7 +10,7 @@ This script will split this large metadata read into a V3-like R2 file (cell bar
 For V1 libraries, R1 is the metadata read. For V2 libraries, R2 is the metadata read.
  
 # Dependencies:
-This script uses command line tools: cutadapt, seqkit, and seqtk. Install these tools in a dedicated conda environment as follows:
+Dependencies include cutadapt, seqkit, and/or seqtk. One can install these tools in a dedicated conda environment as follows:
 ```
 conda create --name seqtools python=3.7
 conda activate seqtools
@@ -20,8 +20,8 @@ conda install seqtk seqkit cutadapt
 ```
 
 # Usage:
-Run this as follows. Names of one or more metadata FASTQ files for conversion are inputted directly from the command line.  Wildcards accepted.
-Example: 
+Names of one or more metadata FASTQ files for conversion are inputted directly from the command line - wildcards accepted.
+Examples: 
 ```
 source convert_metadata_to_V3.sh DEW016.V2.R2.fastq.gz DEW017.V2.R2.fastq.gz
 source convert_metadata_to_V3.sh DEW0*.V2.R2.fastq.gz
