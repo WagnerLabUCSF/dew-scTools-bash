@@ -1,5 +1,5 @@
 # InDropsV3-FASTQ-Conversion
-Command line tool for converting legacy inDrops FASTQ's (V1/V2) into V3-compatible format 
+Bash script for converting legacy inDrops FASTQ's (V1/V2) into a V3-compatible format 
 
 # Description:
 This shell script will convert a metadata FASTQ file from legacy inDrops libraries (V1 or V2) into two V3-compatible FASTQ files.  
@@ -7,10 +7,10 @@ Legacy metadata reads contain the cell barcode split into two parts, a fixed "W1
 but only the first 8bp are required.
 
 This script will split this large metadata read into a V3-like R2 file (cell barcode part 1 -8bp), and a V3-like R4 file (cell barcode part 2 - 8bp, and the UMI -6bp).
-For V1 libraries, R1 is the metadata read. For V2 libraries, R2 is the metadata read.
+For V1 libraries, R1 is the combined metadata read. For V2 libraries, R2 is the metadata read.
  
 # Dependencies:
-Dependencies include cutadapt, seqkit, and/or seqtk. One can install these tools in a dedicated conda environment as follows:
+Dependencies include cutadapt, seqkit, and/or seqtk. One should install these tools in a dedicated conda environment that will be accessed by the script:
 ```
 conda create --name seqtools python=3.7
 conda activate seqtools
@@ -26,3 +26,4 @@ Examples:
 source convert_metadata_to_V3.sh DEW016.V2.R2.fastq.gz DEW017.V2.R2.fastq.gz
 source convert_metadata_to_V3.sh DEW0*.V2.R2.fastq.gz
 ```
+Output files will be written with the suffices "basename.V3.R2.fastq.gz" and "basename.V3.R4.fastq.gz". The "basename" is inferred from the first input file.
