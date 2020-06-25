@@ -20,7 +20,7 @@ conda install seqtk seqkit cutadapt
 ```
 
 # Usage:
-Names of one or more metadata FASTQ files for conversion are inputted directly from the command line - wildcards accepted.
+Names of one or more metadata FASTQ files for conversion are inputted directly from the command line - wildcards accepted.  
 Examples: 
 ```
 source convert_metadata_to_V3.sh DEW016.V2.R2.fastq.gz DEW017.V2.R2.fastq.gz
