@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# InDropsV3-FASTQ-Conversion
+# InDropsV3 FASTQ Conversion
 # Bash script for converting legacy inDrops FASTQ's (V1/V2) into a V3-compatible format 
 #
 # Description:
