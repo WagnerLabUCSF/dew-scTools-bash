@@ -26,7 +26,7 @@ input=( "$@" )
 for bname in ${input[@]}
 do    
     
-    echo Processing $bname 
+    echo Combining barcodes for $bname 
 	paste <(zcat < ${bname}.R2.fastq.gz) <(zcat < ${bname}.R4.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}.R2R4.fastq.gz
 
 done
