@@ -27,7 +27,8 @@
 #
 # Output files will be written with the suffices "basename.V3.R2.fastq.gz" and "basename.V3.R4.fastq.gz". The "basename" is inferred from the first input file.
 #
-#
+
+
 # CODE:
 # activate a prebuilt conda environment containing the required packages
 eval "$(conda shell.bash hook)"

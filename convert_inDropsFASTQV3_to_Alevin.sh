@@ -20,13 +20,16 @@
 # This will perform multiple conversions for each set of FASTQ files
 
 # CODE:
-# input the user-specified filenames as an array
+# input the user-specified FASTQ file basenames as an array
 input=( "$@" )
 
+# loop through each set of FASTQ files
 for bname in ${input[@]}
 do    
     
     echo Combining barcodes for $bname 
+	
+	# concatenate R2 and R4 sequences for each read
 	paste <(zcat < ${bname}.R2.fastq.gz) <(zcat < ${bname}.R4.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}.R2R4.fastq.gz
 
 done
