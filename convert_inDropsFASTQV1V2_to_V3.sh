@@ -6,13 +6,13 @@
 # Description:
 # This shell script will convert a metadata FASTQ file from legacy inDrops libraries (V1 or V2) into two V3-compatible FASTQ files.  
 # Legacy metadata reads contain the cell barcode split into two parts, a fixed "W1" sequence, and the UMI. In inDrops V1/V2, barcode part 1 lengths are variable 8-11bp, 
-# but only the first 8bp are informative.
+# however only the first 8bp are needed to distinguish barcodes.
 #
 # This script will split this large metadata read into a V3-like R2 file (cell barcode part 1 -8bp), and a V3-like R4 file (cell barcode part 2 - 8bp, and the UMI -6bp).
-# For V1 libraries, R1 is the combined metadata read. For V2 libraries, R2 is the metadata read.
+# For V1 libraries, the combined metadata read is R1. For V2 libraries, the metadata read is R2.
 # 
 # Dependencies:
-# Dependencies include cutadapt, seqkit, and/or seqtk. One should install these tools in a dedicated conda environment that will be accessed by the script:
+# Dependencies include cutadapt, seqkit, and/or seqtk. One can install these tools in a dedicated conda environment that will be accessed by the script:
 # conda create --name seqtools python=3.7
 # conda activate seqtools
 # conda config --add channels conda-forge
@@ -51,7 +51,7 @@ do
     # generate V3-like R2 fastq file (extracts 8 bases to the left of the W1 sequence - all on the reverse complement strand)
 	seqkit seq --reverse --complement --seq-type dna -v -j 2 $fname | cutadapt -j 0 -g AAGGCGTCACAAGCAATCACTC -e 0.2 -l 8 - | gzip > $basename.V3.R2.fastq.gz
     
-    # generate V3-like R2 fastq file (alternate command using seqtk; WARNING - seqtk is faster but can sometimes corrupt the FASTQ file format when it encounters rare empty reads)
+    # generate V3-like R2 fastq file (alternate command using seqtk; WARNING - seqtk is faster than seqkit, but will corrupt the FASTQ file format when it encounters rare empty reads)
 	#seqtk seq -r $fname | cutadapt -j 0 -g AAGGCGTCACAAGCAATCACTC -e 0.2 -l 8 - | gzip > $basename.V3.R2.fastq.gz
 
 done
