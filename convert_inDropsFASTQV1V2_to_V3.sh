@@ -51,7 +51,7 @@ do
     # generate V3-like R2 fastq file (extracts 8 bases to the left of the W1 sequence - all on the reverse complement strand)
 	seqkit seq --reverse --complement --seq-type dna -v -j 2 $fname | cutadapt -j 0 -g AAGGCGTCACAAGCAATCACTC -e 0.2 -l 8 - | gzip > $basename.V3.R2.fastq.gz
     
-    # generate V3-like R2 fastq file (alternate command using seqtk; WARNING - seqtk is faster than seqkit, but will corrupt the FASTQ file format when it encounters rare empty reads)
+    # generate V3-like R2 fastq file (alternate command using seqtk; WARNING - seqtk is faster than seqkit, but will corrupt the FASTQ file format if/when it encounters rare empty reads)
 	#seqtk seq -r $fname | cutadapt -j 0 -g AAGGCGTCACAAGCAATCACTC -e 0.2 -l 8 - | gzip > $basename.V3.R2.fastq.gz
 
 done

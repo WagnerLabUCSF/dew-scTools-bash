@@ -5,7 +5,7 @@
 #
 # Salmon-Alevin requires all of the barcode information to be present on a in a single FASTQ read.  
 # This script combines inDrops V2020 reads R1 and R2 into a single 'R1R2' FASTQ file in which the first
-# 16bp are the cell barcode and the last 6bp is the UMI (8+8+8 = 24bp).
+# 16bp are the cell barcode and the last 8bp is the UMI (8+8+8 = 24bp).
 #
 # inDrops V3:
 # R1 = gel barcode part 2 (8bp) + UMI (8bp) = 16bp total 
@@ -30,7 +30,7 @@ do
     
     echo Combining barcodes for $bname 
 	
-	# concatenate R2 and R4 sequences for each read
-	paste <(zcat < ${bname}_R2_001.fastq.gz) <(zcat < ${bname}_R1_001.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2_001.fastq.gz
+	# concatenate R2 and R1 sequences for each read
+	paste <(zcat < ${bname}_R2_001.fastq.gz) <(zcat < ${bname}_R1_001.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
 
 done
