@@ -14,8 +14,8 @@
 # I1 = library index (unnecessary post-demultiplexing)
 #
 # Usage: 
-# 'source convert_inDropsFASTQV2020_to_Alevin.sh scNAS001_S1'
-# This will combine metadata reads scNAS001_S1_R2_001.fastq.gz and scNAS001_S1_R1_001.fastq.gz and write the file scNAS001_S1_R1R2_001.fastq.gz
+# 'source convert_inDropsFASTQV2020_to_Alevin.sh scNAS001'
+# This will combine metadata reads scNAS001_R2.fastq.gz and scNAS001_R1.fastq.gz and write the file scNAS001_R1R2.fastq.gz
 # 
 # 'source convert_inDropsFASTQV2020_to_Alevin.sh scNAS001 scNAS002 scNAS003'
 # This will perform multiple conversions for each set of FASTQ files
@@ -31,6 +31,6 @@ do
     echo Combining barcodes for $bname 
 	
 	# concatenate R2 and R1 sequences for each read
-	paste <(zcat < ${bname}_R2_001.fastq.gz) <(zcat < ${bname}_R1_001.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
+	paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
 
 done
