@@ -29,7 +29,13 @@ do
     
     echo Combining barcodes for $bname 
 	
-	# concatenate R2 and R1 sequences for each read
-	paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
+	# concatenate R2 and R1 sequences for each read; revcomp R2
+	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${bname}_R2.fastq.gz) ${bname}_R1.fastq.gz) \\
+    	--out-file ${bname}_R1R2.fastq.gz \\
+    	--line-width 0 \\
+    	--threads 16
+
+	# old version lacking the reverse complement step
+	#paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
 
 done
