@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# InDropsV2020-Alevin FASTQ conversion
-# Bash script for converting inDrops V2020 FASTQs so that they can be read by Salmon-Alevin
+# inDropsV2020 FASTQ conversion
+# Bash script for converting inDrops V3 FASTQs so that they can be read by modern alignment software.
 #
-# Salmon-Alevin requires all of the barcode information to be present on a in a single FASTQ read.  
 # This script combines inDrops V2020 reads R1 and R2 into a single 'R1R2' FASTQ file in which the first
 # 16bp are the cell barcode and the last 8bp is the UMI (8+8+8 = 24bp).
 #
@@ -14,10 +13,10 @@
 # I1 = library index (unnecessary post-demultiplexing)
 #
 # Usage: 
-# 'source convert_inDropsFASTQV2020_to_Alevin.sh scNAS001'
+# 'source merge_bcodeFASTQ_inDropsV2020.sh scNAS001'
 # This will combine metadata reads scNAS001_R2.fastq.gz and scNAS001_R1.fastq.gz and write the file scNAS001_R1R2.fastq.gz
 # 
-# 'source convert_inDropsFASTQV2020_to_Alevin.sh scNAS001 scNAS002 scNAS003'
+# 'source merge_bcodeFASTQ_inDropsV2020.sh scNAS001 scNAS002 scNAS003'
 # This will perform multiple conversions for each set of FASTQ files
 
 # CODE:

@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# InDropsV3-Alevin FASTQ conversion
-# Bash script for converting inDrops V3 FASTQs so that they can be read by Salmon-Alevin
+# inDropsV3 FASTQ conversion
+# Bash script for converting inDrops V3 FASTQs so that they can be read by modern alignment software.
 #
-# Salmon-Alevin requires all of the barcode information to be present on a in a single FASTQ read.  
 # This script combines inDrops V3 reads R2 and R4 into a single 'R2R4' FASTQ file in which the first
 # 16bp are the cell barcode and the last 6bp is the UMI (8+8+6 = 22bp).
 #
@@ -14,10 +13,10 @@
 # R4 = gel barcode part 2 (8bp) + UMI (6bp) = 14bp total
 # 
 # Usage: 
-# 'source convert_inDropsFASTQV3_to_Alevin.sh DEW101'
+# 'source merge_bcodeFASTQ_inDropsV3.sh DEW101'
 # This will combine metadata reads DEW101.R2.fastq.gz and DEW101.R4.fastq.gz and write the file DEW101.R2R4.fastq.gz
 # 
-# 'source convert_inDropsFASTQV3_to_Alevin.sh DEW101 DEW102 DEW103'
+# 'source merge_bcodeFASTQ_inDropsV3.sh DEW101 DEW102 DEW103'
 # This will perform multiple conversions for each set of FASTQ files
 
 # CODE:
