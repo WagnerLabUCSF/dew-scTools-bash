@@ -23,19 +23,35 @@
 # input the user-specified FASTQ file basenames as an array
 input=( "$@" )
 
-# loop through each set of FASTQ files
-for bname in ${input[@]}
-do    
-    
-    echo Combining barcodes for $bname 
-	
+
+for filename in NAS019*R1.fastq.gz; do
+
+    # get the base filename for each set of reads
+    basename=$(echo $filename | sed 's/.R1.fastq.gz//')
+
+    echo Combining barcodes for ${basename}
+
 	# concatenate R2 and R1 sequences for each read; revcomp R2
-	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${bname}_R2.fastq.gz) ${bname}_R1.fastq.gz \
-    	--out-file ${bname}.R1R2.fastq.gz \
+	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${basename}R2.fastq.gz) ${basename}R1.fastq.gz \
+    	--out-file ${basename}R1R2.fastq.gz \
     	--line-width 0 \
     	--threads 16
 
-	# old version lacking the reverse complement step
-	#paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
-
 done
+
+# loop through each set of FASTQ files
+#for bname in ${input[@]}
+#do    
+#    
+#    echo Combining barcodes for $bname #
+#	
+#	# concatenate R2 and R1 sequences for each read; revcomp R2
+#	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${bname}_R2.fastq.gz) ${bname}_R1.fastq.gz \
+#    	--out-file ${bname}_R1R2.fastq.gz \
+#    	--line-width 0 \
+#    	--threads 16
+#
+#	# old version lacking the reverse complement step
+#	#paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
+#
+#done
