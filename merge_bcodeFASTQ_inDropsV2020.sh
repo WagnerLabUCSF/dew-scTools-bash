@@ -36,6 +36,6 @@ do
     	--threads 16
 
 	# old version lacking the reverse complement step
-	paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
+	#paste <(zcat < ${bname}_R2.fastq.gz) <(zcat < ${bname}_R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${bname}_R1R2.fastq.gz
 
 done
