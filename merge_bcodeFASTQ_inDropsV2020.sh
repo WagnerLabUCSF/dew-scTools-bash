@@ -21,16 +21,15 @@
 
 # CODE:
 # input the user-specified FASTQ file basenames as an array
-input=( "$@" )
-
+#input=( "$@" )
 
 for filename in NAS019*R1.fastq.gz; do
 
     # get the base filename for each set of reads
-    basename=$(echo $filename | sed 's/.R1.fastq.gz//')
+    basename=$(echo $filename | sed 's/R1.fastq.gz//')
 
-    echo Combining barcodes for ${basename}
-
+    echo Combining barcodes for ${basename:0:-1}
+	
 	# concatenate R2 and R1 sequences for each read; revcomp R2
 	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${basename}R2.fastq.gz) ${basename}R1.fastq.gz \
     	--out-file ${basename}R1R2.fastq.gz \
