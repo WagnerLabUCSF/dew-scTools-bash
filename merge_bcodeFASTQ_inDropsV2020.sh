@@ -30,7 +30,7 @@ do
     echo Combining barcodes for $bname 
 	
 	# concatenate R2 and R1 sequences for each read; revcomp R2
-	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${bname}.R2.fastq.gz) ${bname}.R1.fastq.gz \
+	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${bname}_R2.fastq.gz) ${bname}_R1.fastq.gz \
     	--out-file ${bname}.R1R2.fastq.gz \
     	--line-width 0 \
     	--threads 16
