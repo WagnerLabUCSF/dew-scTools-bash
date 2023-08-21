@@ -6,18 +6,15 @@
 # This script combines inDrops V2020 reads R1 and R2 into a single 'R1R2' FASTQ file in which the first
 # 16bp are the cell barcode and the last 8bp is the UMI (8+8+8 = 24bp).
 #
-# inDrops V3:
+# inDrops V2020:
 # R1 = gel barcode part 2 (8bp) + UMI (8bp) = 16bp total 
 # R2 = gel barcode part 1 (8bp)
 # R3 = biological read
 # I1 = library index (unnecessary post-demultiplexing)
-#
-# Usage:
-# The script will automatically detect sets of FASTQ files in the current working directory with shared
-# base filenames and writes a merged '*R1R2.fastq.gz' file for each.
 # 
 # CODE:
 
+# Merge barcode reads for each set of FASTQ files in the current working directory
 for filename in *R1.fastq.gz; do
 
     # get the base filename for each set of reads
@@ -25,11 +22,8 @@ for filename in *R1.fastq.gz; do
 
     echo Combining barcodes for ${basename:0:-1}
 	
-	# concatenate R2 and R1 sequences for each read; revcomp R2
-	seqkit concat <(seqkit seq --reverse --complement --seq-type 'dna' ${basename}R2.fastq.gz) ${basename}R1.fastq.gz \
-    	--out-file ${basename}R1R2.fastq.gz \
-    	--line-width 0 \
-    	--threads 16
+    # concatenate R2 and R1 sequences
+	paste <(zcat < ${basename}R2.fastq.gz) <(zcat < ${basename}R1.fastq.gz) | paste - - - - | awk -F'\t' '{OFS="\n"; print $1,$3$4,$5,$7$8}' | gzip - > ${basename}R1R2.fastq.gz
 
 done
 
